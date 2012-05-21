@@ -151,8 +151,13 @@
 
             If s._name = cbScripts.SelectedItem.ToString Then
 
+                s.cmds.Clear()
+
                 For Each l As String In rtb.Lines
-                    s.cmds.Add(l)
+                    If l IsNot String.Empty Then
+                        s.cmds.Add(l)
+                    End If
+
                 Next
 
             End If
