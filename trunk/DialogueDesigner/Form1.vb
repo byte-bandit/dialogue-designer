@@ -231,6 +231,8 @@
 
         If t._trigger IsNot Nothing Then
             tbResult.Text = t._trigger._name
+        Else
+            tbResult.Text = String.Empty
         End If
 
         fillPreview()
@@ -990,7 +992,7 @@
 
         scriptus_inst.ShowDialog()
 
-        If scriptus_inst.currentScript IsNot String.Empty Then
+        If scriptus_inst.currentScript IsNot Nothing Then
 
             getTopicById(GetDialogue, topicsListBox.SelectedItem.ToString)._trigger = scriptus_inst.currentScript
 
