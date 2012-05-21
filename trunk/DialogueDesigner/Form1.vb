@@ -3,6 +3,7 @@
     Dim dialogueArray() As String
     Dim dialogLib As List(Of Dialogue) = New List(Of Dialogue)
     Dim path As String = Application.StartupPath & "\Dialogues.txt"
+    Dim scriptus_inst As Scriptus = New Scriptus()
 
 
 
@@ -58,7 +59,7 @@
 
             If lines.Length = 1 Then
 
-                'We have no "" arguments -> Dialogue or Goto
+                'We have no "" arguments -> Dialogue or Goto or Trigger
                 Dim parts() As String = lines(0).Split(" ")
 
                 'Do we have a new Dialogue
@@ -82,6 +83,14 @@
                         choices.Add(New KeyValuePair(Of Topic, String)(cuT, parts(o)))
 
                     Next
+                    Continue For
+                End If
+
+
+                'Do we have a Trigger?
+                If parts(0) = "@TRIGGER" Then
+
+                    cuT._trigger = New Script(parts(1))
                     Continue For
                 End If
 
@@ -218,6 +227,12 @@
 
         FillDGV()
 
+        Dim t As Topic = getTopicById(GetDialogue, topicsListBox.SelectedItem.ToString)
+
+        If t._trigger IsNot Nothing Then
+            tbResult.Text = t._trigger._name
+        End If
+
         fillPreview()
 
     End Sub
@@ -313,6 +328,12 @@
         Catch ex As Exception
             Debug.Print(ex.ToString)
         End Try
+
+        Dim t As Topic = getTopicById(GetDialogue, topicsListBox.SelectedItem.ToString)
+
+        If t._trigger IsNot Nothing Then
+            tbResult.Text = t._trigger._name
+        End If
 
         fillPreview()
 
@@ -533,6 +554,10 @@
 
 
                 Next
+
+                If t._trigger IsNot Nothing Then
+                    b.AppendLine(vbTab & vbTab & "@TRIGGER " & t._trigger._name)
+                End If
 
                 Dim choiceS As String = String.Empty
 
@@ -952,6 +977,26 @@
         t._id = S
 
         Reload()
+
+    End Sub
+
+
+
+
+
+
+
+    Private Sub btnScriptus_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnScriptus.Click
+
+        scriptus_inst.ShowDialog()
+
+        If scriptus_inst.currentScript IsNot String.Empty Then
+
+            getTopicById(GetDialogue, topicsListBox.SelectedItem.ToString)._trigger = scriptus_inst.currentScript
+
+            Reload()
+
+        End If
 
     End Sub
 

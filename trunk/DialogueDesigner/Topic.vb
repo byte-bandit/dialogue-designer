@@ -3,6 +3,7 @@
     Public _text As String = String.Empty
     Public _choice As List(Of Topic) = New List(Of Topic)
     Public _id As String = String.Empty
+    Public _trigger As Script = Nothing
 
 
     Public Sub New()

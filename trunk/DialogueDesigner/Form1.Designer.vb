@@ -36,23 +36,25 @@ Partial Class Form1
         Me.infosContextNew = New System.Windows.Forms.ToolStripMenuItem
         Me.infosContextEdit = New System.Windows.Forms.ToolStripMenuItem
         Me.infosContextGoodbye = New System.Windows.Forms.ToolStripMenuItem
+        Me.DeleteToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.choiceListBox = New System.Windows.Forms.ListBox
         Me.choiceContext = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.choiceContextEdit = New System.Windows.Forms.ToolStripMenuItem
+        Me.choiceContextDelete = New System.Windows.Forms.ToolStripMenuItem
         Me.grpChoice = New System.Windows.Forms.GroupBox
         Me.btnNewDialogue = New System.Windows.Forms.Button
         Me.btnSave = New System.Windows.Forms.Button
         Me.btnDeleteDialogue = New System.Windows.Forms.Button
         Me.btnChangeID = New System.Windows.Forms.Button
         Me.btnQuit = New System.Windows.Forms.Button
-        Me.choiceContextDelete = New System.Windows.Forms.ToolStripMenuItem
-        Me.DeleteToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.btnUp = New System.Windows.Forms.Button
         Me.btnDown = New System.Windows.Forms.Button
         Me.btnAdd = New System.Windows.Forms.Button
         Me.btnDelete = New System.Windows.Forms.Button
         Me.previewBox = New System.Windows.Forms.RichTextBox
         Me.GroupBox1 = New System.Windows.Forms.GroupBox
+        Me.btnScriptus = New System.Windows.Forms.Button
+        Me.tbResult = New System.Windows.Forms.TextBox
         Me.topicsContext.SuspendLayout()
         CType(Me.infosDGV, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.infosContext.SuspendLayout()
@@ -67,7 +69,7 @@ Partial Class Form1
         Me.topicsListBox.FormattingEnabled = True
         Me.topicsListBox.Location = New System.Drawing.Point(12, 51)
         Me.topicsListBox.Name = "topicsListBox"
-        Me.topicsListBox.Size = New System.Drawing.Size(120, 420)
+        Me.topicsListBox.Size = New System.Drawing.Size(120, 459)
         Me.topicsListBox.TabIndex = 1
         '
         'topicsContext
@@ -115,7 +117,7 @@ Partial Class Form1
         Me.infosDGV.ContextMenuStrip = Me.infosContext
         Me.infosDGV.Location = New System.Drawing.Point(138, 51)
         Me.infosDGV.Name = "infosDGV"
-        Me.infosDGV.Size = New System.Drawing.Size(672, 144)
+        Me.infosDGV.Size = New System.Drawing.Size(672, 143)
         Me.infosDGV.TabIndex = 3
         '
         'infosContext
@@ -142,13 +144,19 @@ Partial Class Form1
         Me.infosContextGoodbye.Size = New System.Drawing.Size(122, 22)
         Me.infosContextGoodbye.Text = "Goodbye"
         '
+        'DeleteToolStripMenuItem
+        '
+        Me.DeleteToolStripMenuItem.Name = "DeleteToolStripMenuItem"
+        Me.DeleteToolStripMenuItem.Size = New System.Drawing.Size(122, 22)
+        Me.DeleteToolStripMenuItem.Text = "Delete"
+        '
         'choiceListBox
         '
         Me.choiceListBox.ContextMenuStrip = Me.choiceContext
         Me.choiceListBox.FormattingEnabled = True
         Me.choiceListBox.Location = New System.Drawing.Point(6, 19)
         Me.choiceListBox.Name = "choiceListBox"
-        Me.choiceListBox.Size = New System.Drawing.Size(120, 95)
+        Me.choiceListBox.Size = New System.Drawing.Size(120, 69)
         Me.choiceListBox.TabIndex = 4
         '
         'choiceContext
@@ -163,19 +171,26 @@ Partial Class Form1
         Me.choiceContextEdit.Size = New System.Drawing.Size(107, 22)
         Me.choiceContextEdit.Text = "Add..."
         '
+        'choiceContextDelete
+        '
+        Me.choiceContextDelete.Name = "choiceContextDelete"
+        Me.choiceContextDelete.Size = New System.Drawing.Size(107, 22)
+        Me.choiceContextDelete.Text = "Delete"
+        '
         'grpChoice
         '
+        Me.grpChoice.Controls.Add(Me.tbResult)
         Me.grpChoice.Controls.Add(Me.choiceListBox)
-        Me.grpChoice.Location = New System.Drawing.Point(712, 201)
+        Me.grpChoice.Location = New System.Drawing.Point(712, 244)
         Me.grpChoice.Name = "grpChoice"
         Me.grpChoice.Size = New System.Drawing.Size(136, 125)
         Me.grpChoice.TabIndex = 4
         Me.grpChoice.TabStop = False
-        Me.grpChoice.Text = "Choice"
+        Me.grpChoice.Text = "Choice und Result"
         '
         'btnNewDialogue
         '
-        Me.btnNewDialogue.Location = New System.Drawing.Point(718, 332)
+        Me.btnNewDialogue.Location = New System.Drawing.Point(718, 375)
         Me.btnNewDialogue.Name = "btnNewDialogue"
         Me.btnNewDialogue.Size = New System.Drawing.Size(120, 23)
         Me.btnNewDialogue.TabIndex = 5
@@ -184,7 +199,7 @@ Partial Class Form1
         '
         'btnSave
         '
-        Me.btnSave.Location = New System.Drawing.Point(718, 419)
+        Me.btnSave.Location = New System.Drawing.Point(718, 462)
         Me.btnSave.Name = "btnSave"
         Me.btnSave.Size = New System.Drawing.Size(120, 23)
         Me.btnSave.TabIndex = 8
@@ -193,7 +208,7 @@ Partial Class Form1
         '
         'btnDeleteDialogue
         '
-        Me.btnDeleteDialogue.Location = New System.Drawing.Point(718, 390)
+        Me.btnDeleteDialogue.Location = New System.Drawing.Point(718, 433)
         Me.btnDeleteDialogue.Name = "btnDeleteDialogue"
         Me.btnDeleteDialogue.Size = New System.Drawing.Size(120, 23)
         Me.btnDeleteDialogue.TabIndex = 7
@@ -202,7 +217,7 @@ Partial Class Form1
         '
         'btnChangeID
         '
-        Me.btnChangeID.Location = New System.Drawing.Point(718, 361)
+        Me.btnChangeID.Location = New System.Drawing.Point(718, 404)
         Me.btnChangeID.Name = "btnChangeID"
         Me.btnChangeID.Size = New System.Drawing.Size(120, 23)
         Me.btnChangeID.TabIndex = 6
@@ -211,24 +226,12 @@ Partial Class Form1
         '
         'btnQuit
         '
-        Me.btnQuit.Location = New System.Drawing.Point(718, 448)
+        Me.btnQuit.Location = New System.Drawing.Point(718, 491)
         Me.btnQuit.Name = "btnQuit"
         Me.btnQuit.Size = New System.Drawing.Size(120, 23)
         Me.btnQuit.TabIndex = 9
         Me.btnQuit.Text = "Beenden"
         Me.btnQuit.UseVisualStyleBackColor = True
-        '
-        'choiceContextDelete
-        '
-        Me.choiceContextDelete.Name = "choiceContextDelete"
-        Me.choiceContextDelete.Size = New System.Drawing.Size(107, 22)
-        Me.choiceContextDelete.Text = "Delete"
-        '
-        'DeleteToolStripMenuItem
-        '
-        Me.DeleteToolStripMenuItem.Name = "DeleteToolStripMenuItem"
-        Me.DeleteToolStripMenuItem.Size = New System.Drawing.Size(122, 22)
-        Me.DeleteToolStripMenuItem.Text = "Delete"
         '
         'btnUp
         '
@@ -283,33 +286,52 @@ Partial Class Form1
         'GroupBox1
         '
         Me.GroupBox1.Controls.Add(Me.previewBox)
-        Me.GroupBox1.Location = New System.Drawing.Point(139, 201)
+        Me.GroupBox1.Location = New System.Drawing.Point(139, 244)
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.Size = New System.Drawing.Size(567, 270)
         Me.GroupBox1.TabIndex = 15
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Dialog Vorschau"
         '
+        'btnScriptus
+        '
+        Me.btnScriptus.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnScriptus.Image = Global.DialogueDesigner.My.Resources.Resources.scroll
+        Me.btnScriptus.Location = New System.Drawing.Point(816, 200)
+        Me.btnScriptus.Name = "btnScriptus"
+        Me.btnScriptus.Size = New System.Drawing.Size(32, 32)
+        Me.btnScriptus.TabIndex = 16
+        Me.btnScriptus.UseVisualStyleBackColor = True
+        '
+        'tbResult
+        '
+        Me.tbResult.Location = New System.Drawing.Point(6, 99)
+        Me.tbResult.Name = "tbResult"
+        Me.tbResult.ReadOnly = True
+        Me.tbResult.Size = New System.Drawing.Size(120, 20)
+        Me.tbResult.TabIndex = 17
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(860, 481)
+        Me.ClientSize = New System.Drawing.Size(860, 526)
+        Me.Controls.Add(Me.btnScriptus)
         Me.Controls.Add(Me.btnDelete)
         Me.Controls.Add(Me.btnAdd)
-        Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.btnDown)
+        Me.Controls.Add(Me.GroupBox1)
+        Me.Controls.Add(Me.btnUp)
+        Me.Controls.Add(Me.infosDGV)
         Me.Controls.Add(Me.btnQuit)
+        Me.Controls.Add(Me.topicNameTextBox)
+        Me.Controls.Add(Me.grpChoice)
+        Me.Controls.Add(Me.dialoguesComboBox)
         Me.Controls.Add(Me.btnChangeID)
+        Me.Controls.Add(Me.topicsListBox)
         Me.Controls.Add(Me.btnDeleteDialogue)
         Me.Controls.Add(Me.btnNewDialogue)
-        Me.Controls.Add(Me.btnUp)
-        Me.Controls.Add(Me.grpChoice)
-        Me.Controls.Add(Me.infosDGV)
         Me.Controls.Add(Me.btnSave)
-        Me.Controls.Add(Me.topicNameTextBox)
-        Me.Controls.Add(Me.dialoguesComboBox)
-        Me.Controls.Add(Me.topicsListBox)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "Form1"
         Me.Text = "Dialogue Designer"
@@ -318,6 +340,7 @@ Partial Class Form1
         Me.infosContext.ResumeLayout(False)
         Me.choiceContext.ResumeLayout(False)
         Me.grpChoice.ResumeLayout(False)
+        Me.grpChoice.PerformLayout()
         Me.GroupBox1.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
@@ -352,5 +375,7 @@ Partial Class Form1
     Friend WithEvents btnDelete As System.Windows.Forms.Button
     Friend WithEvents previewBox As System.Windows.Forms.RichTextBox
     Friend WithEvents GroupBox1 As System.Windows.Forms.GroupBox
+    Friend WithEvents btnScriptus As System.Windows.Forms.Button
+    Friend WithEvents tbResult As System.Windows.Forms.TextBox
 
 End Class
