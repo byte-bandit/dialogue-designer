@@ -8,11 +8,11 @@ Imports System.Runtime.InteropServices
 
 ' Die Werte der Assemblyattribute überprüfen
 
-<Assembly: AssemblyTitle("DialogueDesigner")> 
-<Assembly: AssemblyDescription("")> 
+<Assembly: AssemblyTitle("Dialogue Designer")> 
+<Assembly: AssemblyDescription("Helps you create awesome dialogues and scripts!")> 
 <Assembly: AssemblyCompany("")> 
-<Assembly: AssemblyProduct("DialogueDesigner")> 
-<Assembly: AssemblyCopyright("Copyright ©  2012")> 
+<Assembly: AssemblyProduct("Dialogue Designer")> 
+<Assembly: AssemblyCopyright("GNU GPL 3")> 
 <Assembly: AssemblyTrademark("")> 
 
 <Assembly: ComVisible(False)>
