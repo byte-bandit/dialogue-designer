@@ -4,6 +4,11 @@
     Dim dialogLib As List(Of Dialogue) = New List(Of Dialogue)
     Dim path As String = Application.StartupPath & "\Dialogues.txt"
     Dim scriptus_inst As Scriptus = New Scriptus()
+    Dim logger As Logger = New Logger()
+
+    Private Sub Form1_Disposed(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Disposed
+        logger.closing()
+    End Sub
 
 
 
@@ -32,6 +37,9 @@
 
 
     Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+
+        logger.init()
+        logger.log(Now.ToString & " Designer loaded.")
         getDialoguesFromTextFile()
         fillDialoguesComboBox()
     End Sub
@@ -44,6 +52,7 @@
             dialogueArray = System.IO.File.ReadAllLines(path)
         Catch ex As Exception
             MsgBox("Could not find Dialogues.txt. Exiting.", MsgBoxStyle.Critical, Me.Name)
+            logger.log(ex.ToString)
             Me.Close()
             Return
         End Try
@@ -93,6 +102,7 @@
                     cuT._trigger = New Script(parts(1))
                     Continue For
                 End If
+
 
             Else
 
@@ -222,6 +232,7 @@
         Try
             topicNameTextBox.Text = getTopicById(getDialogueByString(Me.dialoguesComboBox.SelectedItem.ToString), topicsListBox.SelectedItem.ToString)._text
         Catch ex As Exception
+            logger.log(ex.ToString)
             Debug.Print(ex.ToString)
         End Try
 
@@ -328,8 +339,13 @@
             dialoguesComboBox.SelectedItem = selD
             topicsListBox.SelectedIndex = selT
         Catch ex As Exception
+            logger.log(ex.ToString)
             Debug.Print(ex.ToString)
         End Try
+
+        If topicsListBox.SelectedItem Is Nothing Then
+            Return
+        End If
 
         Dim t As Topic = getTopicById(GetDialogue, topicsListBox.SelectedItem.ToString)
 
@@ -393,7 +409,12 @@
             preamble = preamble & vbTab
         Next
 
-        wrpl(preamble & "Player: " & t._text, Color.Green)
+        If t._trigger IsNot Nothing Then
+            wrpl(preamble & "Player: " & t._text & " [S: " & t._trigger._name & "]", Color.DarkGreen)
+        Else
+            wrpl(preamble & "Player: " & t._text, Color.Green)
+        End If
+
 
         inc += 1
 
@@ -591,6 +612,7 @@
             System.IO.File.Copy(path, path & ".bak")
             System.IO.File.WriteAllText(path, b.ToString)
         Catch ex As Exception
+            logger.log(ex.ToString)
             Debug.Print(ex.ToString)
             Return
         End Try
@@ -619,6 +641,7 @@
         Try
             t = getTopicById(getDialogueByString(dialoguesComboBox.SelectedItem.ToString), topicsListBox.SelectedItem.ToString)
         Catch ex As Exception
+            logger.log(ex.ToString)
             Debug.Print(ex.ToString)
         End Try
 
@@ -671,6 +694,7 @@
                 Try
                     dialogLib.Remove(d)
                 Catch ex As Exception
+                    logger.log(ex.ToString)
                     Debug.Print(ex.ToString)
                 End Try
 
@@ -961,6 +985,7 @@
         Try
             t = getTopicById(getDialogueByString(dialoguesComboBox.SelectedItem.ToString), topicsListBox.SelectedItem.ToString)
         Catch ex As Exception
+            logger.log(ex.ToString)
             Debug.Print(ex.ToString)
         End Try
 
@@ -990,11 +1015,25 @@
 
     Private Sub btnScriptus_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnScriptus.Click
 
+        If topicsListBox.SelectedItem Is Nothing Then
+
+            MsgBox("Ein Topic wählen!", MsgBoxStyle.OkOnly, "Dialogue Designer")
+            Return
+
+        End If
+
+        scriptus_inst.sendData(getTopicById(GetDialogue, topicsListBox.SelectedItem.ToString)._trigger)
         scriptus_inst.ShowDialog()
 
         If scriptus_inst.currentScript IsNot Nothing Then
 
             getTopicById(GetDialogue, topicsListBox.SelectedItem.ToString)._trigger = scriptus_inst.currentScript
+
+            Reload()
+
+        Else
+
+            getTopicById(GetDialogue, topicsListBox.SelectedItem.ToString)._trigger = Nothing
 
             Reload()
 

@@ -5,6 +5,7 @@
     Private scriptlib As List(Of Script) = New List(Of Script)
 
     Public currentScript As Script = Nothing
+    Public initScript As Script = Nothing
 
     Private Sub Scriptus_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         Try
@@ -17,10 +18,34 @@
 
         readScripts()
         fillCB()
-        cbScripts.SelectedIndex = 0
+
+
+        If initScript IsNot Nothing Then
+            For Each i In cbScripts.Items
+
+                If i.ToString = initScript._name Then
+
+                    cbScripts.SelectedItem = i
+                    Exit For
+
+                End If
+
+            Next
+        Else
+            cbScripts.SelectedIndex = 0
+        End If
+
+
     End Sub
 
 
+
+
+    Public Sub sendData(ByVal script As Script)
+
+        initScript = script
+
+    End Sub
 
 
 
@@ -41,6 +66,7 @@
 
         cbScripts.Sorted = True
         cbScripts.SelectedIndex = sel
+
 
     End Sub
 
